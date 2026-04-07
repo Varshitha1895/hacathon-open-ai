@@ -21,7 +21,7 @@ import requests
 from typing import Optional
 
 # ── Import from sibling models.py ──────────────────────────────────────────
-from models import (
+from server.models import (
     Task, AgentAction, RewardResult,
     TASK_BANK, compute_reward,
     HF_TOKEN, API_BASE_URL, MODEL_NAME,
