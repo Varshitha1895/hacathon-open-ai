@@ -1,6 +1,6 @@
 import gradio as gr
 from fastapi import FastAPI
-import inference
+import server.inference as inference
 
 # Create FastAPI app
 app = FastAPI()
@@ -12,7 +12,6 @@ async def reset_endpoint():
 
 # Nee moderation logic
 def check_comment(text):
-    # Nee bad words logic ikkada unchu
     return "ALLOWED: This comment is safe to post."
 
 # Gradio Interface
@@ -26,6 +25,10 @@ demo = gr.Interface(
 # Mount Gradio into FastAPI
 app = gr.mount_gradio_app(app, demo, path="/")
 
-if __name__ == "__main__":
+# DEENI KOSAME VALIDATOR ADUGUTHONDI (DON'T MISS THIS):
+def main():
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=7860)
+
+if __name__ == "__main__":
+    main()
