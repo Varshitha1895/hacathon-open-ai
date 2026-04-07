@@ -22,7 +22,7 @@ from typing import Optional
 # ─────────────────────────────────────────────
 # 🔧 CONFIGURATION — fill these in or set as env vars
 # ─────────────────────────────────────────────
-HF_TOKEN    = os.getenv("HF_TOKEN",    "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")
+HF_TOKEN    = os.getenv("HF_TOKEN",    "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")
 API_BASE_URL = os.getenv("API_BASE_URL", "https://api-inference.huggingface.co/models")
 MODEL_NAME  = os.getenv("MODEL_NAME",  "mistralai/Mistral-7B-Instruct-v0.2")
 # ─────────────────────────────────────────────
