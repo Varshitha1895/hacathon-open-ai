@@ -1,0 +1,12 @@
+name: "women_safety_mod_telugu"
+version: "1.0.0"
+server:
+  module: "server.models"
+  class: "ContentModerator"
+tasks:
+  - id: "abuse"
+    weight: 0.4
+  - id: "harassment"
+    weight: 0.4
+  - id: "spam"
+    weight: 0.2
