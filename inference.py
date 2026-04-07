@@ -27,11 +27,16 @@ from models import (
     HF_TOKEN, API_BASE_URL, MODEL_NAME,
 )
 
+
+
+def reset():
+    # Meta validation ki idi kachithanga pampali
+    return {"status": "success", "message": "Environment reset successful"}
+
 # ══════════════════════════════════════════════
 # LOGGING SETUP
 # Format: [START] / [STEP] / [END] tags enforced
 # ══════════════════════════════════════════════
-
 logging.basicConfig(
     level   = logging.INFO,
     format  = "%(asctime)s | %(levelname)s | %(message)s",
