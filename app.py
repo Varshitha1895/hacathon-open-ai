@@ -1,25 +1,26 @@
 import gradio as gr
+import inference
 
+# Reset function for Meta validation
+def handle_reset():
+    return inference.reset()
+
+# Your main moderation function
 def check_comment(text):
-    # Ikkada manam Telugu boothulu add chestunnam
-    telugu_bad_words = ["lanja", "dengu", "pichi", "kodaka", "na kodaka", "thittu"]
-    english_bad_words = ["abuse", "harass", "cheap", "badword", "stupid", "sexy" , "fuck you" , "shit" ,"Bitch "]
-    
-    combined_list = telugu_bad_words + english_bad_words
-    
-    # Check if any bad word is in the text
-    if any(word in text.lower() for word in combined_list):
-        return "❌ BLOCKED: Harmful or Vulgar content detected!"
-    else:
-        return "✅ ALLOWED: This comment is safe to post."
+    # (Nuvvu mundu rasina Telugu/English bad words logic ikkada unchu)
+    # ... logic ...
+    return "ALLOWED" # Example
 
-demo = gr.Interface(
-    fn=check_comment, 
-    inputs=gr.Textbox(label="Post a Comment", placeholder="Type Telugu/Manglish/English here..."), 
-    outputs="text",
-    title="🛡️ Women Safety AI Moderator",
-    description="Now updated with Telugu word detection!"
-)
+with gr.Blocks() as demo:
+    gr.Markdown("# Women Safety AI Moderator")
+    input_text = gr.Textbox(label="Post a Comment")
+    output_text = gr.Textbox(label="Output")
+    submit_btn = gr.Button("Submit")
+    
+    submit_btn.click(fn=check_comment, inputs=input_text, outputs=output_text)
+    
+    # Ee line Meta validation ki chala important
+    reset_btn = gr.Button("Reset", visible=False) 
+    reset_btn.click(fn=handle_reset)
 
-if __name__ == "__main__":
-   https://huggingface.co/spaces/Varshitha189/hacathon-open-ai
+demo.launch(server_name="0.0.0.0", server_port=7860)
