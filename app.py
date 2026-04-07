@@ -1,26 +1,31 @@
 import gradio as gr
+from fastapi import FastAPI
 import inference
 
-# Reset function for Meta validation
-def handle_reset():
+# Create FastAPI app
+app = FastAPI()
+
+# Meta validation kosam direct /reset route
+@app.post("/reset")
+async def reset_endpoint():
     return inference.reset()
 
-# Your main moderation function
+# Nee moderation logic
 def check_comment(text):
-    # (Nuvvu mundu rasina Telugu/English bad words logic ikkada unchu)
-    # ... logic ...
-    return "ALLOWED" # Example
+    # Nee bad words logic ikkada unchu
+    return "ALLOWED: This comment is safe to post."
 
-with gr.Blocks() as demo:
-    gr.Markdown("# Women Safety AI Moderator")
-    input_text = gr.Textbox(label="Post a Comment")
-    output_text = gr.Textbox(label="Output")
-    submit_btn = gr.Button("Submit")
-    
-    submit_btn.click(fn=check_comment, inputs=input_text, outputs=output_text)
-    
-    # Ee line Meta validation ki chala important
-    reset_btn = gr.Button("Reset", visible=False) 
-    reset_btn.click(fn=handle_reset)
+# Gradio Interface
+demo = gr.Interface(
+    fn=check_comment,
+    inputs=gr.Textbox(label="Post a Comment"),
+    outputs="text",
+    title="Women Safety AI Moderator"
+)
 
-demo.launch(server_name="0.0.0.0", server_port=7860)
+# Mount Gradio into FastAPI
+app = gr.mount_gradio_app(app, demo, path="/")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860)
