@@ -3,12 +3,22 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "hacathon-open-ai"
+name = "women-safety-ai"
 version = "0.1.0"
 description = "Women Safety AI Moderator"
+readme = "README.md"
+requires-python = ">=3.9"
 dependencies = [
-    "gradio",
+    "gradio>=4.0.0",
     "fastapi",
     "uvicorn",
-    "requests"
+    "requests",
+    "openenv-core>=0.2.0",
+    "openenv>=0.2.0"
 ]
+
+[project.scripts]
+server = "app:app"
+
+[tool.uv]
+managed = true
