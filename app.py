@@ -22,4 +22,4 @@ demo = gr.Interface(
 )
 
 if __name__ == "__main__":
-    demo.launch(share=True)
+   https://huggingface.co/spaces/Varshitha189/hacathon-open-ai
