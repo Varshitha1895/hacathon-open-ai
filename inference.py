@@ -1,8 +1,8 @@
-import server.inference as inference
+import sys
+import os
 
-def reset():
-    return inference.reset()
+# Server folder path ni Python ki chepthunnam
+sys.path.append(os.path.join(os.path.dirname(__file__), 'server'))
 
-if __name__ == "__main__":
-    # Meta validator check chesthe idi success chupisthundi
-    print(reset())
+# Ikkada nundi server folder lo unna original code ni pilusthundhi
+from server.inference import *
