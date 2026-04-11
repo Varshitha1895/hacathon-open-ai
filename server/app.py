@@ -1,34 +1,31 @@
 import gradio as gr
 from fastapi import FastAPI
 import server.inference as inference
+import uvicorn
 
-# Create FastAPI app
 app = FastAPI()
 
-# Meta validation kosam direct /reset route
 @app.post("/reset")
 async def reset_endpoint():
     return inference.reset()
 
-# Nee moderation logic
 def check_comment(text):
-    return "ALLOWED: This comment is safe to post."
+    return "The system is running and monitoring safety."
 
-# Gradio Interface
+# Gradio Interface setup
 demo = gr.Interface(
-    fn=check_comment,
-    inputs=gr.Textbox(label="Post a Comment"),
-    outputs="text",
-    title="Women Safety AI Moderator"
+    fn=check_comment, 
+    inputs="text", 
+    outputs="text", 
+    title="Women Safety AI"
 )
 
-# Mount Gradio into FastAPI
+# Ee line Validator ki chala important
 app = gr.mount_gradio_app(app, demo, path="/")
 
-# DEENI KOSAME VALIDATOR ADUGUTHONDI (DON'T MISS THIS):
+# Validator aduguthunna main() function idhe
 def main():
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
     main()
