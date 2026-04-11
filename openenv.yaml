@@ -9,4 +9,4 @@ tasks:
   - id: "harassment"
     weight: 0.4
   - id: "spam"
-    weight: 0.2A
+    weight: 0.2
