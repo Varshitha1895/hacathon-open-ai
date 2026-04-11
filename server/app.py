@@ -9,7 +9,10 @@ from typing import Any
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from .models import AgentAction, Observation, RewardResult, StepResult, TASK_BANK, Task, compute_reward, rule_based_flag
+try:
+    from .models import AgentAction, Observation, RewardResult, StepResult, TASK_BANK, Task, compute_reward, rule_based_flag
+except ImportError:
+    from server.models import AgentAction, Observation, RewardResult, StepResult, TASK_BANK, Task, compute_reward, rule_based_flag
 
 app = FastAPI(title="OpenEnv Moderation Server", version="1.0.0")
 
