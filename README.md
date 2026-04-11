@@ -3,9 +3,7 @@ title: Women Safety Ai
 emoji: 🛡️
 colorFrom: pink
 colorTo: indigo
-sdk: gradio
-sdk_version: 6.11.0
-app_file: server/app.py
+sdk: docker
 app_port: 7860
 pinned: false
 license: apache-2.0

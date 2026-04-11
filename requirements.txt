@@ -1,5 +1,4 @@
 fastapi
 uvicorn
 requests
-openenv-core
 python-multipart

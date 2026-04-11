@@ -58,6 +58,7 @@ def _build_observation(payload: Any) -> Observation:
 def run_inference(base_url: str = BASE_URL) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
     session = requests.Session()
+    session_id = ""
 
     try:
         reset_response = session.post(f"{base_url}/reset", timeout=TIMEOUT)
@@ -65,6 +66,7 @@ def run_inference(base_url: str = BASE_URL) -> list[dict[str, Any]]:
         if reset_response.status_code != 200 or reset_payload.get("status") == "error":
             return [{"status": "error", "message": f"Reset failed: {reset_payload.get('message', reset_payload)}"}]
 
+        session_id = str(reset_payload.get("session_id", ""))
         current = reset_payload.get("observation", {})
 
         for _ in range(32):
@@ -74,8 +76,19 @@ def run_inference(base_url: str = BASE_URL) -> list[dict[str, Any]]:
                 break
 
             action = _default_action(observation)
-            step_response = session.post(f"{base_url}/step", json=action.__dict__, timeout=TIMEOUT)
+            step_payload_body = {**action.__dict__, "session_id": session_id}
+            step_response = session.post(f"{base_url}/step", json=step_payload_body, timeout=TIMEOUT)
             step_payload = _parse_response(step_response)
+            if step_response.status_code != 200 or step_payload.get("status") == "error":
+                results.append(
+                    {
+                        "status": "error",
+                        "message": f"Step failed: {step_payload.get('message', step_payload)}",
+                        "action": step_payload_body,
+                    }
+                )
+                break
+
             reward_data = step_payload.get("reward", {}) if isinstance(step_payload, dict) else {}
 
             reward = RewardResult(
@@ -84,7 +97,7 @@ def run_inference(base_url: str = BASE_URL) -> list[dict[str, Any]]:
                 breakdown=dict(reward_data.get("breakdown", {}) if isinstance(reward_data.get("breakdown", {}), dict) else {}),
                 feedback=str(reward_data.get("feedback", "")),
             )
-            results.append({"observation": observation.to_dict(), "action": action.__dict__, "reward": reward.to_dict()})
+            results.append({"observation": observation.to_dict(), "action": step_payload_body, "reward": reward.to_dict()})
 
             next_observation_payload = step_payload.get("observation", {}) if isinstance(step_payload, dict) else {}
             current = next_observation_payload

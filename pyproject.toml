@@ -9,12 +9,10 @@ description = "Women Safety AI Moderator"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "gradio>=4.0.0",
     "fastapi",
     "uvicorn",
     "requests",
-    "openenv-core>=0.2.0",
-    "openenv>=0.2.0"
+    "python-multipart"
 ]
 
 [project.scripts]
